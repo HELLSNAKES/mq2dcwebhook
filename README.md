@@ -35,6 +35,7 @@ Bắt đầu
   ├──> MQ-2 đọc giá trị khí gas (Analog từ A0)
   │
   ├──> Gửi giá trị đến ESP8266 để xử lý
+  ├──> Gửi dữ liệu lên Supabase
   │
   ├──> Hiển thị dữ liệu lên Web UI (trang HTML)
   │
@@ -57,6 +58,8 @@ Bắt đầu
   │       │       └──> Không → Khởi động lại sau 20 giây
   │
   ├──> Khởi tạo Web Server trên ESP8266
+  │
+  ├──> Gửi dữ liệu lên Supabase
   │
   ├──> Lắng nghe request từ trình duyệt
   │
@@ -152,24 +155,28 @@ Connection: close
 +---------------------+
 |    ESP8266          |
 |  (WiFi Module)      |
-| - Reads MQ-2 Data   |
-| - Hosts Web UI      |
-| - Sends Alerts      |
+| - Đọc dữ liệu MQ-2  |
+| - Gửi dữ liệu lên   |
+|   Supabase          |
+| - Kiểm tra ngưỡng   |
+| - Gửi cảnh báo      |
 +---------+----------+
           |
           v
 +---------------------+           +---------------------+
 |   Web Server        |  <------> |   Web UI (HTML)     |
-| (ESP8266 Server)    |           | - Displays Gas Data |
-| - Serves JSON Data  |           | - Shows Chart       |
-| - Handles API Req   |           | - Alarm Control     |
+| (ESP8266 Server)    |           | - Hiển thị dữ liệu  |
+| - Cung cấp JSON API |           | - Biểu đồ dữ liệu   |
+| - Nhận request      |           | - Lịch sử đo        |
 +---------------------+           +---------------------+
           |
           v
-+---------------------+
-|   Discord Webhook   |
-| (Sends Alerts)      |
-+---------------------+
++---------------------+           +---------------------+
+|   Supabase (DB)    |  <------> |   Discord Webhook   |
+| - Lưu dữ liệu khí  |           | - Nhận HTTP POST   |
+|   gas (API REST)   |           | - Gửi cảnh báo     |
++---------------------+           +---------------------+
+
 ```
 
 
