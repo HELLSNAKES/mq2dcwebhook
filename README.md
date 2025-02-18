@@ -136,4 +136,40 @@ Connection: close
 
 {"embeds":[{"title":"🚨 Cảnh báo khí gas vượt ngưỡng an toàn! 🚨","description":"Nồng độ khí gas cao: 250","color":16711680,"footer":{"text":"text","icon_url":"icon_url"}}]}
 ```
+## 🌍 WEB UI
+<p align="center"> 
+  <img src="https://raw.githubusercontent.com/HELLSNAKES/mq2dcwebhook/main/asset/webui.PNG" alt="hellsnakes"/> 
+  
+## 🎯 Tổng hợp lại về hệ thống
+  
+```plaintext
++---------------------+
+|   MQ-2 Sensor       |
+|  (Detects Gas)      |
++---------+----------+
+          |
+          v
++---------------------+
+|    ESP8266          |
+|  (WiFi Module)      |
+| - Reads MQ-2 Data   |
+| - Hosts Web UI      |
+| - Sends Alerts      |
++---------+----------+
+          |
+          v
++---------------------+           +---------------------+
+|   Web Server        |  <------> |   Web UI (HTML)     |
+| (ESP8266 Server)    |           | - Displays Gas Data |
+| - Serves JSON Data  |           | - Shows Chart       |
+| - Handles API Req   |           | - Alarm Control     |
++---------------------+           +---------------------+
+          |
+          v
++---------------------+
+|   Discord Webhook   |
+| (Sends Alerts)      |
++---------------------+
+```
+
 
