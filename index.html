@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP8266 & MQ-2 System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        pre {
+            background-color: #2d2d2d;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <h1 class="text-center text-primary">📟 ESP8266 & MQ-2 Gas Sensor</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow p-3">
+                    <h3>🛠 Linh kiện sử dụng</h3>
+                    <ul>
+                        <li>ESP8266 (NodeMCU)</li>
+                        <li>Cảm biến khí gas MQ-2</li>
+                        <li>Nguồn cấp 5V</li>
+                        <li>Dây cắm, Broad cắm</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow p-3">
+                    <h3>🔌 Sơ đồ nối dây</h3>
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>MQ-2 Pin</th>
+                                <th>ESP8266 Pin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>VCC</td><td>3.3V</td></tr>
+                            <tr><td>GND</td><td>GND</td></tr>
+                            <tr><td>A0</td><td>A0</td></tr>
+                            <tr><td>D0</td><td>D2 (GPIO4)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow p-3 mt-4">
+            <h3>📜 Lưu đồ phần cứng</h3>
+            <pre>Bắt đầu
+  ├──> Cấp nguồn...
+  ├──> Kết nối WiFi...
+  ├──> MQ-2 đọc giá trị...
+  ├──> Gửi giá trị đến ESP8266...
+  ├──> Hiển thị dữ liệu Web UI...
+  ├──> Nếu vượt ngưỡng → Cảnh báo Discord...
+  └──> Lặp lại mỗi 2s</pre>
+        </div>
+        
+        <div class="card shadow p-3 mt-4">
+            <h3>🚨 Lưu đồ gửi cảnh báo Discord</h3>
+            <pre>ESP8266 nhận dữ liệu
+  ├──> Giá trị vượt ngưỡng?
+  │       ├──> Không → Bỏ qua
+  │       ├──> Có → Gửi HTTP POST
+  │               ├──> Nhận phản hồi...
+  │               ├──> Thành công? → In "Gửi thành công"
+  │               ├──> Lỗi → In log
+  └──> Chờ lần đo tiếp theo</pre>
+        </div>
+
+        <div class="card shadow p-3 mt-4">
+            <h3>📩 JSON gửi lên Discord</h3>
+            <pre>{
+  "embeds": [
+    {
+      "title": "🚨 Cảnh báo khí gas vượt ngưỡng an toàn! 🚨",
+      "description": "Nồng độ khí gas cao: 250",
+      "color": 16711680,
+      "footer": {
+        "text": "text",
+        "icon_url": "icon_url"
+      }
+    }
+  ]
+}</pre>
+        </div>
+
+        <div class="card shadow p-3 mt-4 text-center">
+            <h3>🌍 WEB UI</h3>
+            <img src="https://raw.githubusercontent.com/HELLSNAKES/mq2dcwebhook/main/asset/webui.PNG" class="img-fluid" alt="hellsnakes" />
+        </div>
+
+        <div class="card shadow p-3 mt-4">
+            <h3>🎯 Tổng hợp lại về hệ thống</h3>
+            <pre>+---------------------+
+|   MQ-2 Sensor      |
+|  (Detects Gas)     |
++---------+---------+
+          |
+          v
++---------------------+
+|    ESP8266         |
+|  (WiFi Module)     |
+| - Reads MQ-2 Data  |
+| - Hosts Web UI     |
+| - Sends Alerts     |
+ +---------+---------+
+          |
+          v
++---------------------+            +---------------------+
+|   Web Server        |  <------>  |   Web UI (HTML)     |
+| (ESP8266 Server)    |            | - Displays Gas Data |
+| - Serves JSON Data  |            | - Shows Chart       |
+| - Handles API Req   |            | - Alarm Control     |
++---------------------+            +---------------------+
+          |
+          v
++---------------------+
+|   Discord Webhook   |
+| (Sends Alerts)      |
++---------------------+</pre>
+        </div>
+
+        <div class="text-center mt-4">
+            <h5>Nguồn: <a href="https://github.com/HELLSNAKES/mq2dcwebhook" target="_blank">Github HELLSNAKES</a></h5>
+            <a href="https://github.com/HELLSNAKES/mq2dcwebhook/archive/refs/heads/main.zip" class="btn btn-primary" target="_blank">📥 Tải xuống mã nguồn</a>
+        </div>
+    </div>
+</body>
+</html>
