@@ -146,6 +146,69 @@ Connection: close
 <p align="center"> 
   <img src="https://raw.githubusercontent.com/HELLSNAKES/mq2dcwebhook/main/asset/webui.PNG" alt="hellsnakes"/> 
   
+## 🕸️ Lưu đồ gửi dữ liệu trên Supabase
+```plaintext
++-----------------------+
+| Cảm biến MQ2 đo khí gas|
++-----------------------+
+          |
+          v
++---------------------------+
+| ESP8266 đọc giá trị ADC   |
+| gasValue = analogRead(A0) |
++---------------------------+
+          |
+          v
++---------------------------+
+| Tạo JSON chứa dữ liệu     |
+| {                         |
+|   "created_at": now(),    |
+|   "gas_value": gasValue   |
+| }                         |
++---------------------------+
+          |
+          v
++---------------------------+
+| Gửi HTTP POST đến Supabase|
+| URL: https://xyz.supabase.co|
+| API Key: ******           |
++---------------------------+
+          |
+          v
++---------------------------+
+| Supabase nhận & xác thực  |
+| Lưu vào bảng PostgreSQL   |
+| gasdata(id, created_at,   |
+| gas_value)                |
++---------------------------+
+          |
+          v
++---------------------------+
+| Website gọi API Supabase  |
+| GET /rest/v1/gasdata      |
++---------------------------+
+          |
+          v
++---------------------------+
+| Nhận dữ liệu JSON         |
+| [{id, created_at, gas_value},...] |
++---------------------------+
+          |
+          v
++---------------------------+
+| Cập nhật biểu đồ Chart.js |
++---------------------------+
+          |
+          v
++---------------------------+
+| Cập nhật bảng Bootstrap   |
++---------------------------+
+          |
+          v
++---------------------------+
+| Lặp lại sau mỗi 2 giây    |
++---------------------------+
+```
 ## 🎯 Tổng hợp lại về hệ thống
   
 ```plaintext
