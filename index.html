@@ -67,6 +67,7 @@
   ├──> Kết nối WiFi...
   ├──> MQ-2 đọc giá trị...
   ├──> Gửi giá trị đến ESP8266...
+  ├──> Gửi dữ liệu lên Supabase
   ├──> Hiển thị dữ liệu Web UI...
   ├──> Nếu vượt ngưỡng → Cảnh báo Discord...
   └──> Lặp lại mỗi 2s</pre>
@@ -109,32 +110,35 @@
         <div class="card shadow p-3 mt-4">
             <h3>🎯 Tổng hợp lại về hệ thống</h3>
             <pre>+---------------------+
-|   MQ-2 Sensor      |
-|  (Detects Gas)     |
-+---------+---------+
+|   MQ-2 Sensor       |
+|  (Detects Gas)      |
++---------+----------+
           |
           v
 +---------------------+
-|    ESP8266         |
-|  (WiFi Module)     |
-| - Reads MQ-2 Data  |
-| - Hosts Web UI     |
-| - Sends Alerts     |
- +---------+---------+
+|    ESP8266          |
+|  (WiFi Module)      |
+| - Đọc dữ liệu MQ-2  |
+| - Gửi dữ liệu lên   |
+|   Supabase          |
+| - Kiểm tra ngưỡng   |
+| - Gửi cảnh báo      |
++---------+----------+
           |
           v
-+---------------------+            +---------------------+
-|   Web Server        |  <------>  |   Web UI (HTML)     |
-| (ESP8266 Server)    |            | - Displays Gas Data |
-| - Serves JSON Data  |            | - Shows Chart       |
-| - Handles API Req   |            | - Alarm Control     |
-+---------------------+            +---------------------+
++---------------------+           +---------------------+
+|   Web Server        |  <------> |   Web UI (HTML)     |
+| (ESP8266 Server)    |           | - Hiển thị dữ liệu  |
+| - Cung cấp JSON API |           | - Biểu đồ dữ liệu   |
+| - Nhận request      |           | - Lịch sử đo        |
++---------------------+           +---------------------+
           |
           v
-+---------------------+
-|   Discord Webhook   |
-| (Sends Alerts)      |
-+---------------------+</pre>
++---------------------+           +---------------------+
+|   Supabase (DB)    |  <------> |   Discord Webhook   |
+| - Lưu dữ liệu khí  |           | - Nhận HTTP POST   |
+|   gas (API REST)   |           | - Gửi cảnh báo     |
++---------------------+           +---------------------+</pre>
         </div>
 
         <div class="text-center mt-4">
