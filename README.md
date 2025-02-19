@@ -1,3 +1,4 @@
+>*Sử dụng cảm biến MQ-2 và ESP8266 để gửi dữ liệu lên Supabase ,từ đó lấy database và hiển thị biểu đồ thu thập trên Web Ui và gửi cảnh báo qua Discord Webhook*
 # 👾 Phần cứng
 
 ## 🛠 Linh kiện sử dụng
@@ -7,7 +8,9 @@
 - **Nguồn cấp 5V**
 - **Dây cắm**
 - **Broad cắm**
-
+## 💫 Yêu cầu phần mềm
+- **Tài khoản Supabase để lấy apikey** [Register](https://supabase.com)
+- Tài khoản **Discord** để nhận thông báo qua Webhook [Register](https://discord.com/)
 ## 🔌 Sơ đồ nối dây
 
 | MQ-2 Pin | ESP8266 Pin |
