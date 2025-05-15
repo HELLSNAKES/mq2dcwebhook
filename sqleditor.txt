@@ -1,0 +1,5 @@
+create table gasdata (
+  id serial primary key,
+  gas_value integer not null,
+  created_at timestamp with time zone default now()
+);
